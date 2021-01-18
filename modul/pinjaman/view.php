@@ -23,9 +23,10 @@ $rakha2 = mysqli_query($conn,$rakha1);
 
 function jmlBayar($id)
 {
+    require '../../connection.php';
     $hasil = 0;
 
-    $get = "select jsum(angsur+bunga) as total from pinjaman_detail where id_pinjam = '$id'";
+    $get = "select sum(angsuran + bunga) as total from pinjaman_detail where id_pinjam = '$id'";
     $dt = mysqli_fetch_assoc(mysqli_query($conn, $get));
     $row = mysqli_num_rows(mysqli_query($conn, $get));
 
@@ -38,6 +39,7 @@ function jmlBayar($id)
 
 function sisa($id)
 {
+    require '../../connection.php';
     $hasil = 0;
 
     $get = "select jumlah_bayar as total from pinjaman_detail where id_pinjam = '$id'";
@@ -51,6 +53,7 @@ function sisa($id)
     return $hasil;
 }
 
+$total = 0;
 
 ?>
 <!doctype html>
@@ -106,7 +109,7 @@ function sisa($id)
                     </div>
 
                     <!-- table -->
-                    <div class="table-responsive">
+                    <div class="table-responsive-sm">
                         
                         <table class="table">
                             <thead class="thead-dark">
@@ -128,6 +131,7 @@ function sisa($id)
                                     $jmlBayar = jmlBayar($rakha3['id_pinjam']);
                                     $jmlCicil = sisa($rakha3['id_pinjam']);
                                     $sisa = $jmlBayar - $jmlCicil;
+                                    $total = $total + $rakha3['jumlah'];
                                     ?>
                                   <tr>
                                     <td><?= $rakha3['id_pinjam'] ?></td>
@@ -147,6 +151,10 @@ function sisa($id)
                                   </tr>
                                 <?php endwhile; ?>
                             </tbody>
+                            <tfoot>
+                                <td colspan="6"><b>Total Jumlah<b></td>
+                                <td> <b><?= $total ?> <b></td>
+                            </tfoot>
                         </table>
 
                     </div>
@@ -158,7 +166,7 @@ function sisa($id)
     </div>
 
     <!-- Footer -->
-    <div class="footer bg-transparent text-muted text-center py-5 font-weight-light">
+    <div class="footer bg-transparent text-muted text-center font-weight-light">
         Rakha Zahran Nurfirmansyah | XII RPL 1 | 2020
     </div>
 
