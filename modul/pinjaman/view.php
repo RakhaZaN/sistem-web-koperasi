@@ -109,7 +109,7 @@ $total = 0;
                     </div>
 
                     <!-- table -->
-                    <div class="table-responsive-sm">
+                    <div class="table-responsive">
                         
                         <table class="table">
                             <thead class="thead-dark">

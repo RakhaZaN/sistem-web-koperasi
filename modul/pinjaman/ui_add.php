@@ -14,6 +14,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
 $query = "select noanggota, namaanggota from anggota";
 $search = mysqli_query($conn, $query);
 
+$getDate = date("Y-m-d");
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,7 +38,7 @@ $search = mysqli_query($conn, $query);
         <div class="container pt-5">
 
             <div class="card border-dark mt-5">
-                <form action="add.php" method="post">
+                <form action="rakha.php" method="post">
                     <div class="card-header text-center">
                         <h1>Create New</h1>
                     </div>
@@ -50,7 +52,7 @@ $search = mysqli_query($conn, $query);
                                 </div>
                                 <label for="tgl" class="col-sm-2 text-right">Tanggal</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="tgl" name="rakha2">
+                                    <input type="date" class="form-control" id="tgl" name="rakha2" value="<?= $getDate ?>">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -59,7 +61,7 @@ $search = mysqli_query($conn, $query);
                                     <select class="form-control" id="noa" name="rakha3">
                                         <?php while ( $data = mysqli_fetch_assoc($search) ) : ?>
                                         <option value="<?= $data['noanggota'] ?>">
-                                            <?= $data['namaanggota'] ?>
+                                            <?= $data['noanggota'] ." | ". $data['namaanggota'] ?>
                                         </option>
                                         <?php endwhile; ?>
                                     </select>
@@ -75,7 +77,7 @@ $search = mysqli_query($conn, $query);
                                     </select>
                                 </div>
                                 <label for="bunga" class="col-sm-2 text-right">Bunga</label>
-                                <div class="col-sm-4">
+                                <div class="input-group col-sm-4">
                                     <select class="form-control" id="bunga" name="rakha5">
                                       <option value="1">1</option>
                                       <option value="2">2</option>
@@ -86,6 +88,9 @@ $search = mysqli_query($conn, $query);
                                       <option value="7">7</option>
                                       <option value="8">8</option>
                                     </select>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"> % </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
