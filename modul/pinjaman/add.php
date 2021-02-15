@@ -29,7 +29,7 @@ if (mysqli_affected_rows($conn) > 0) {
 
         $query = "insert into pinjaman_detail (id_pinjam, cicilan, angsuran, bunga) 
                 values ('$rakha1', '$i', '$angsuran', '$bunga')";
-        $inser = mysqli_query($conn, $query);
+        $insert = mysqli_query($conn, $query);
         $err = mysqli_error($conn);
 
         if (mysqli_affected_rows($conn) > 0) {

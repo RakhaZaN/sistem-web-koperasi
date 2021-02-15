@@ -38,7 +38,7 @@ $getDate = date("Y-m-d");
         <div class="container pt-5">
 
             <div class="card border-dark mt-5">
-                <form action="rakha.php" method="post">
+                <form action="add.php" method="post">
                     <div class="card-header text-center">
                         <h1>Create New</h1>
                     </div>
