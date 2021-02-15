@@ -146,7 +146,7 @@ $total = 0;
                                     <td><?= $jmlCicil ?></td>
                                     <td><?= $sisa ?></td>
                                     <td class="text-center" width="100">
-                                        <a href="detail.php?id=<?= $rakha3['id_pinjam'] ?>" class="btn btn-outline-info btn-sm">Detail</a> |
+                                        <a href="detail.php?id=<?= $rakha3['id_pinjam'] ?>" class="btn btn-outline-info btn-sm">Detail</a>
                                         <a href="delete.php?id=<?= $rakha3['id_pinjam'] ?>" class="btn btn-outline-danger btn-sm">Delete</a>
                                     </td>
                                   </tr>

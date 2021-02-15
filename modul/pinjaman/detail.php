@@ -21,11 +21,11 @@ if (isset($_POST['logoutbtn'])) {
 $total = 0;
 $jumlah = 0;
 
-$id = $_GET['id'];
+$id = $_GET['id_pinjaman'];
 
 $rakha1 = "SELECT ph.*, a.namaanggota, a.jk, a.noidentitas, a.tempat_lahir, a.tgl_lahir, a.alamat
             FROM pinjaman_header ph, anggota a
-            where ph.noanggota=a.noanggota order by ph.id_pinjam desc";
+            where ph.noanggota=a.noanggota and ph.id_pinjam='$id' order by ph.id_pinjam desc";
 $query = mysqli_query($conn, $rakha1);
 $dataA = mysqli_fetch_assoc($query);
 // var_dump($dataA);

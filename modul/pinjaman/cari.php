@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require '../../connection.php';
+
 if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
     echo "<script>
         alert('You are not login yet, please login first !');
@@ -16,6 +18,10 @@ if (isset($_POST['logoutbtn'])) {
         </script>";
 }
 
+$rakha1 = "select ph.*, a.namaanggota, a.jk from pinjaman_header ph, anggota a where ph.noanggota = a.noanggota order by ph.id_pinjam DESC";
+$rakha2 = mysqli_query($conn,$rakha1);
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -28,7 +34,7 @@ if (isset($_POST['logoutbtn'])) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Dashboard | Koperasi</title>
+    <title>Pinjaman | Koperasi</title>
 </head>
 
 <body>
@@ -39,6 +45,7 @@ if (isset($_POST['logoutbtn'])) {
             <div class="row">
                 <h1 class="display-3 text-white col-sm-12 col-md-6">Koperasi</h1>
                 <div class="col-sm-12 col-md-6 d-flex align-items-end justify-content-end text-light">
+                    <a href="../../" class="btn btn-secondary mr-2">Back To Main Menu</a>
                     <form action="" method="post">
                         <button type="submit" class="btn btn-outline-dark" name="logoutbtn">Logout</button>
                     </form>
@@ -53,58 +60,37 @@ if (isset($_POST['logoutbtn'])) {
 
             <!-- Page Path -->
             <div class="path text-right mb-5">
-                <span class="badge badge-secondary">Main Menu</span> |
+                Main Menu | Transaksi |
+                <span class="badge badge-secondary">Pinjaman</span> |
             </div>
 
-            <div class="card-deck text-center">
+            <!-- Body -->
+            <form action="detail.php?" method="get">
 
-                <div class="card border-dark">
-                    <div class="card-header bg-warning">
-                        Master
-                    </div>
+                <div class="card">
                     <div class="card-body">
-                        <div class="list-group list-group-flush">
-                            <a href="modul/jenissimpanan/view.php" class="list-group-item list-group-item-action">Jenis Pinjaman</a>
-                            <a href="modul/anggota/view.php" class="list-group-item list-group-item-action">Anggota</a>
-                            <a href="modul/user/view.php" class="list-group-item list-group-item-action">User</a>
+                        <h3 class="card-title">Cari Pinjaman</h3>
+                        <div class="input-group">
+                          <select class="custom-select" id="ddDataPinjaman" name="id_pinjaman" aria-label="dropdown">
+                            <option selected>--- Select Pinjaman ---</option>
+                            <?php while ($pinjaman = mysqli_fetch_assoc($rakha2)) : ?>
+                            <option value="<?= $pinjaman['id_pinjam'] ?>"><?= $pinjaman['id_pinjam'] ." | ". $pinjaman['noanggota'] ." - ". $pinjaman['namaanggota'] ?></option>
+                            <?php endwhile; ?>
+                          </select>
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                          </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card border-dark">
-                    <div class="card-header bg-success text-light">
-                        Transaksi
-                    </div>
-                    <div class="card-body">
-                        <div class="list-group list-group-flush">
-                            <a href="modul/pinjaman/view.php" class="list-group-item list-group-item-action">Pinjaman</a>
-                            <a href="modul/pinjaman/cari.php" class="list-group-item list-group-item-action">Bayar Pinjaman</a>
-                            <a href="" class="list-group-item list-group-item-action">Simpanan</a>
-                            <a href="" class="list-group-item list-group-item-action">Penarikan Simpanan</a>
-                        </div>
-                    </div>
-                </div>
+            </form>
+            <!-- End Body -->
 
-                <div class="card border-dark">
-                    <div class="card-header bg-danger text-light">
-                        Laporan
-                    </div>
-                    <div class="card-body">
-                        <div class="list-group list-group-flush">
-                            <a href="" class="list-group-item list-group-item-action">Pinjaman</a>
-                            <a href="" class="list-group-item list-group-item-action">Simpanan</a>
-                            <a href="" class="list-group-item list-group-item-action">Anggota</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
     </div>
 
     <!-- Footer -->
-    <div class="footer bg-transparent text-muted text-center py-5 font-weight-light">
+    <div class="footer bg-transparent text-muted text-center font-weight-light">
         Rakha Zahran Nurfirmansyah | XII RPL 1 | 2020
     </div>
 
